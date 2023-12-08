@@ -1,6 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 
+
+const Intro = (props) => (
+  <p className='App-intro'>
+    First functional component
+  </p>
+)
+
+
 function App() {
   return (
     <div className="App">
@@ -17,6 +25,7 @@ function App() {
         >
           Learn React
         </a>
+        <Intro/>
       </header>
     </div>
   );
