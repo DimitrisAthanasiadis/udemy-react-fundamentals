@@ -2,6 +2,7 @@ import logo from '../../logo.svg';
 import './App.css';
 import Intro from '../Intro';
 import { Component } from 'react';
+import "whatwg-fetch";
 
 
 class App extends Component {
@@ -13,10 +14,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const series = ["Peaky Blinders", "Supernatural"];
-    setTimeout(() => {
-      this.setState({series});
-    }, 5000);
+    fetch("https://api.tvmaze.com/search/shows?q=Vikings")
+    .then(response => response.json())
+    .then(json => this.setState({ "series": json.map(show => show.show) }))
   }
 
   render() {
@@ -36,7 +36,14 @@ class App extends Component {
             Learn React
           </a>
           <Intro message="Here you can find all of your most loved series" />
-          <p>series contains - {this.state.series}</p>
+          <ul>
+            {this.state.series.map((show) => (
+              <li key={show.id}>
+                <h2>{show.name}</h2>
+                <p>{show.summary}</p>
+              </li>
+            ))}
+          </ul>
           <p>length of series array - {this.state.series.length}</p>
         </header>
       </div>
