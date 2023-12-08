@@ -8,8 +8,15 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      series: []
+      series: ["Vikings"]
     };
+  }
+
+  componentDidMount() {
+    const series = ["Peaky Blinders", "Supernatural"];
+    setTimeout(() => {
+      this.setState({series});
+    }, 5000);
   }
 
   render() {
@@ -29,7 +36,8 @@ class App extends Component {
             Learn React
           </a>
           <Intro message="Here you can find all of your most loved series" />
-          length of series array - {this.state.series.length}
+          <p>series contains - {this.state.series}</p>
+          <p>length of series array - {this.state.series.length}</p>
         </header>
       </div>
     );
