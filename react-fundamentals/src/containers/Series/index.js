@@ -6,12 +6,12 @@ class Series extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          series: ["Vikings"]
+          series: []
         };
     }
-    
-    componentDidMount() {
-        fetch("https://api.tvmaze.com/search/shows?q=Vikings")
+
+    onSeriesInputChange = e => {
+        fetch(`https://api.tvmaze.com/search/shows?q=${e.target.value}`)
         .then(response => response.json())
         .then(json => this.setState({ "series": json.map(show => show.show) }))
     }
@@ -20,6 +20,7 @@ class Series extends Component {
         return (
             <div>
                 <p>length of series array - {this.state.series.length}</p>
+                <input type="text" onChange={this.onSeriesInputChange} />
                 <SeriesList list={this.state.series} />
             </div>
         )
