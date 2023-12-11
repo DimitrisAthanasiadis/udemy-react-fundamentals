@@ -10,7 +10,7 @@ import SingleSeries from "../../containers/SingleSeries";
 const Main = props => (
     <Routes>
         <Route path="/" element={<Series/>} />
-        <Route path="/series/:id" element={<SingleSeries/>} />
+        <Route path="/series/:showId" element={<SingleSeries/>} />
     </Routes>
 )
 

@@ -1,12 +1,11 @@
 import React from "react";
 import "./index.css"
+import { Link } from "react-router-dom";
 
 
 const SeriesListItem = ({series}) => (
-    <li key={series.id}>
-        <h2>
-            <a className="series-href" href={series.url} target="blank" >{series.name}</a>
-        </h2>
+    <li>
+        <Link to={`/series/${series.id}`} >{series.name}</Link>
     </li>
 )
 
