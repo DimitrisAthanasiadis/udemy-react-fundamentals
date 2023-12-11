@@ -4,7 +4,9 @@ import "./index.css"
 
 const SeriesListItem = ({series}) => (
     <li key={series.id}>
-        <h2>{series.name}</h2>
+        <h2>
+            <a className="series-href" href={series.url} target="blank" >{series.name}</a>
+        </h2>
     </li>
 )
 
