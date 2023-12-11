@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import SeriesList from "../../components/SeriesList";
+import Loader from "../../components/Loader";
 
 
 class Series extends Component {
@@ -41,7 +42,7 @@ class Series extends Component {
                     <p>No TV series found with this name</p>
                 }
                 {
-                    isFetching && <p>Loading...</p>
+                    isFetching && <Loader/>
                 }
                 {
                     !isFetching && <SeriesList list={this.state.series} />
