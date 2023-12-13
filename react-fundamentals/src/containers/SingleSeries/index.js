@@ -24,12 +24,16 @@ const SingleSeries = () => {
   }, [showId]); // The dependency array ensures the effect runs when showId changes
 
   if (!showData) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   return (
     <div>
-      <h1><a target="blank" href={showData.url} >{showData.name}</a></h1>
+      <h1>
+        <a target="blank" href={showData.url}>
+          {showData.name}
+        </a>
+      </h1>
       {/* Render showData or other components based on the fetched data */}
       <img src={showData.image.medium} />
       <div>

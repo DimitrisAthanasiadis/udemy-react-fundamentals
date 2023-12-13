@@ -1,58 +1,50 @@
-import React, {Component} from "react";
+import React, { Component, useEffect, useState } from "react";
 import SeriesList from "../../components/SeriesList";
 import Loader from "../../components/Loader";
-import Intro from "../../components/Intro"
+import Intro from "../../components/Intro";
 
+const Series = () => {
+  const [series, setSeries] = useState([]);
+  const [seriesName, setSeriesName] = useState("");
+  const [isFetching, setIsFetching] = useState(false);
 
-class Series extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          series: [],
-          seriesName: "",
-          isFetching: false
-        };
+  const onSeriesInputChange = (e) => {
+    setSeriesName(e.target.value);
+    setIsFetching(true);
+  };
+
+  useEffect(() => {
+    if (seriesName.trim() === "") {
+      setIsFetching(false);
+      setSeries([]);
+
+      return;
     }
 
-    onSeriesInputChange = e => {
-        this.setState({ "seriesName": e.target.value, "isFetching": true });
-        fetch(`https://api.tvmaze.com/search/shows?q=${e.target.value}`)
-        .then(response => response.json())
-        .then(json => this.setState({ "series": json.map(show => show.show), "isFetching": false }))
-    }
+    fetch(`https://api.tvmaze.com/search/shows?q=${seriesName}`)
+      .then((response) => response.json())
+      .then((json) => {
+        setSeries(json.map((show) => show.show));
+        setIsFetching(false);
+      });
+  }, [seriesName]);
 
-    render() {
-        const { series, seriesName, isFetching } = this.state;
-        return (
-            <div>
-                <Intro message="Here you can find all of your most loved series" />
-                <div>
-                    <input
-                        value={seriesName}
-                        type="text"
-                        onChange={this.onSeriesInputChange} 
-                    />
-                </div>
-                {
-                    !isFetching && series.length === 0 && seriesName.trim() === ""
-                    &&
-                    <p>Please enter a series name into the input</p>
-                }
-                {
-                    !isFetching && series.length === 0 && seriesName.trim() !== ""
-                    &&
-                    <p>No TV series found with this name</p>
-                }
-                {
-                    isFetching && <Loader/>
-                }
-                {
-                    !isFetching && <SeriesList list={this.state.series} />
-                }
-            </div>
-        )
-    }
-}
+  return (
+    <div>
+      <Intro message="Here you can find all of your most loved series" />
+      <div>
+        <input value={seriesName} type="text" onChange={onSeriesInputChange} />
+      </div>
+      {!isFetching && series.length === 0 && seriesName.trim() === "" && (
+        <p>Please enter a series name into the input</p>
+      )}
+      {!isFetching && series.length === 0 && seriesName.trim() !== "" && (
+        <p>No TV series found with this name</p>
+      )}
+      {isFetching && <Loader />}
+      {!isFetching && <SeriesList list={series} />}
+    </div>
+  );
+};
 
-
-export default Series
+export default Series;
